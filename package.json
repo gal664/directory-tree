@@ -1,0 +1,19 @@
+{
+  "name": "directory-tree",
+  "version": "1.0.0",
+  "description": "a little script to assist in tracking files in large directories",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gal664/directory-tree.git"
+  },
+  "author": "Gal Yaniv",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gal664/directory-tree/issues"
+  },
+  "homepage": "https://github.com/gal664/directory-tree#readme"
+}
