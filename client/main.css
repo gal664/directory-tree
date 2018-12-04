@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css?family=Assistant');
+
+*{
+      font-family: 'Assistant', sans-serif;
+      box-sizing: border-box;
+}
+
+body {
+      margin: 0;
+      padding: 0;
+      background: url("wallpaper.jpg");
+      height: 90vh;
+}
+
+.main_container{
+      margin: 50px;
+      background: rgba(255, 255, 255, 0.5);
+      padding: 20px;
+}
+
+.container{
+      display: flex;
+      flex-direction: column;
+}
+
+input[type=text]{
+      width: 350px;
+      margin-bottom: 10px;
+}
+
+input[type=submit]{
+      width: 100px;
+      background: #FFAD85;
+      color: #FFFBE8;
+      border: none;
+      height: 1.5em;
+      border-radius: 8px;
+}
+
+input[type=submit]:hover{
+      cursor: pointer;
+}
+
+.tree_container{
+      display: none;
+}
+
+.hierarchy_li{
+      font-weight: bold;
+      margin: 5px;
+}
+
+.hierarchy_li:hover{
+      cursor: pointer;
+}
+
+.hierarchy_li_bad{
+      color: red;
+}
+
+.hierarchy_li_good{
+      color: green;
+}
+
+
+.hierarchy_header:hover{
+      cursor: pointer;
+}
