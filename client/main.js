@@ -6,19 +6,44 @@ document.addEventListener("DOMContentLoaded", function () {
       const initialContainer = document.getElementsByClassName("initial_container")[0]
       const treeContainer = document.getElementsByClassName("tree_container")[0]
       const responseElement = document.getElementById("responseData")
+      const searchbarInput = document.getElementById("searchbar")
+      const searchResultsContainer = document.getElementById("searchResults")
 
       submitBtn.addEventListener("click", () => {
+
+            submitBtn.disabled = true
 
             let path = `${pathInput.value}/${dirNameInput.value}`
 
             fetch(`/dirtree?path=${path}`, { method: "get" })
                   .then(res => res.json())
                   .then(data => {
+
                         initialContainer.style.display = "none"
                         treeContainer.style.display = "flex"
 
                         let hierarchy = createHierarchyDiv(data)
                         responseElement.appendChild(hierarchy)
+
+                        searchbarInput.addEventListener("change", (event) => {
+                                                            
+                              while (searchResultsContainer.children[0]) {
+                                    searchResultsContainer.removeChild(searchResultsContainer.children[0]);
+                              }
+
+                              if (searchbarInput.value.length > 2) {
+
+                                    let query = searchbarInput.value
+                                    let results = search(data.children, query)
+
+                                    for (result of results) {
+                                          let liElement = createHierarchyDiv(result)
+                                          searchResultsContainer.appendChild(liElement)
+                                    }
+
+                              }
+
+                        })
 
                   })
 
@@ -26,13 +51,65 @@ document.addEventListener("DOMContentLoaded", function () {
 
 })
 
+function search(data, query) {
+
+      let results = []
+
+      for (let i = 0; i < data.length; i++) {
+            
+            let team = data[i]
+            
+            if (team.name.indexOf(query) > -1) {
+
+                  results.push(team)
+
+            }
+
+            if (team.type == "directory") {
+
+                  for (let j = 0; j < team.children.length; j++) {
+
+                        let member = team.children[j]
+
+                        if (member.name.indexOf(query) > -1) {
+
+                              results.push(member)
+
+                        }
+            
+                        if (member.type == "directory") {
+                              
+                              for (let x = 0; x < member.children.length; x++) {
+                                    
+                                    let school = member.children[x]
+                                    
+                                    if (school.name.indexOf(query) > -1) {
+
+                                          results.push(school)
+
+                                    }
+                        
+                              }
+            
+                        }
+            
+                  }
+
+            }
+
+      }
+
+      return results
+
+}
+
 function createHierarchyDiv(obj) {
       let container = document.createElement("ul")
       container.classList.add("hierarchy_container")
 
       let listItem = document.createElement("li")
       listItem.classList.add("hierarchy_li")
-      
+
       let lastFolderNames = [
             "בניית תוכנית עבודה",
             "מבחני אמצע שנה ודוחות נלווים",
@@ -41,11 +118,11 @@ function createHierarchyDiv(obj) {
             "סטטוס אמצע שנה מנהל בית ספר",
             "פתיחת שנת הלימודים",
       ]
-      
-      if(lastFolderNames.indexOf(obj.name) == -1){
+
+      if (lastFolderNames.indexOf(obj.name) == -1) {
             listItem.innerText = obj.name
       } else {
-            if(obj.children.length == 0){
+            if (obj.children.length == 0) {
                   listItem.innerText = `${obj.name} (${obj.children.length}) 😠`
                   listItem.classList.add("hierarchy_li_bad")
             } else {
@@ -53,9 +130,9 @@ function createHierarchyDiv(obj) {
                   listItem.classList.add("hierarchy_li_good")
             }
       }
-      
-      
-      
+
+
+
       listItem.setAttribute("state", "closed")
 
       listItem.addEventListener("click", () => {
