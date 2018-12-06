@@ -11,5 +11,5 @@ app.use('/', express.static(path.join(__dirname, '../client')))
 
 app.use("/dirtree", dirTree)
 
-server.listen(process.env.PORT || port, () => console.log(`server is listening at port ${process.env.PORT || port}`))
+app.listen(process.env.PORT || port, () => console.log(`server is listening at port ${process.env.PORT || port}`))
 // app.listen(port, () => console.log(`server is listening at port ${port}`))
