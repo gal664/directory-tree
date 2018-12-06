@@ -49,14 +49,13 @@ document.addEventListener("DOMContentLoaded", function () {
                         })
 
                   })
-
       })
 
 })
 
 function createFallingEmoji(container) {
       
-      let emojis = ["👻", "🤑", "👹", "😻", "💅", "🐔", "🌟", "🍑", "🌈", "🦔", "🍄", "🥨", "🍤", "🍩", "🍰", "🍕", "🍹", "✈️", "🏠", "🔮", "🛌", "🎁", "🎈"]
+      let emojis = ["👻","🤑","👹","😻","💅","🐔","🌟","🍑","🌈","🦔","🍄","🥨","🍤","🍩","🍰","🍕","🍹","✈️","🏠","🔮","🛌","🎁","🎈"]
 
       let randomEmoji = emojis[Math.floor(Math.random() * emojis.length)]
       
@@ -68,9 +67,11 @@ function createFallingEmoji(container) {
       spinningDiv.className = "spinning"
       spinningDiv.innerText = randomEmoji
       
-      fallingDiv.appendChild(spinningDiv);
+      fallingDiv.appendChild(spinningDiv)
       container.appendChild(fallingDiv)
-      setTimeout(() => container.removeChild(fallingDiv), 3000);
+
+      setTimeout(() => container.removeChild(fallingDiv), 3000)
+
 }
 
 function search(data, query) {
