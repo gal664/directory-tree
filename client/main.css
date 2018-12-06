@@ -12,6 +12,42 @@ body {
       height: 90vh;
 }
 
+#emojisContainer{
+      width: 100%;
+}
+
+.falling{
+      animation: fall 2s linear 1;
+      font-size: 2em;
+      position: absolute;
+      right: 0;
+      opacity: 0;
+}
+
+.spinning{
+      animation: rotate 1s linear infinite;
+}
+
+@keyframes fall {
+      0% {
+            top: -10px;
+            opacity: 1;
+      }
+      100% {
+            top: 90%;
+            opacity: 0;
+      }
+}
+
+@keyframes rotate {
+      0% {
+            transform: rotate(0deg);
+      }
+      100% {
+            transform: rotate(360deg);
+      }
+}
+
 .main_container{
       margin: 50px;
       background: rgba(255, 255, 255, 0.5);

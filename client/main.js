@@ -8,25 +8,28 @@ document.addEventListener("DOMContentLoaded", function () {
       const responseElement = document.getElementById("responseData")
       const searchbarInput = document.getElementById("searchbar")
       const searchResultsContainer = document.getElementById("searchResults")
-
+      let fallingEmojis
       submitBtn.addEventListener("click", () => {
 
-            submitBtn.disabled = true
-
+            let emojisContainer = document.querySelector("#emojisContainer")
+            fallingEmojis = setInterval(() => createFallingEmoji(emojisContainer), 50);
+            
+            initialContainer.style.display = "none"
+            console.log(fallingEmojis)
             let path = `${pathInput.value}/${dirNameInput.value}`
 
             fetch(`/dirtree?path=${path}`, { method: "get" })
                   .then(res => res.json())
                   .then(data => {
 
-                        initialContainer.style.display = "none"
+                        clearInterval(fallingEmojis)
                         treeContainer.style.display = "flex"
 
                         let hierarchy = createHierarchyDiv(data)
                         responseElement.appendChild(hierarchy)
 
                         searchbarInput.addEventListener("change", (event) => {
-                                                            
+
                               while (searchResultsContainer.children[0]) {
                                     searchResultsContainer.removeChild(searchResultsContainer.children[0]);
                               }
@@ -51,14 +54,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
 })
 
+function createFallingEmoji(container) {
+      
+      let emojis = ["👻", "🤑", "👹", "😻", "💅", "🐔", "🌟", "🍑", "🌈", "🦔", "🍄", "🥨", "🍤", "🍩", "🍰", "🍕", "🍹", "✈️", "🏠", "🔮", "🛌", "🎁", "🎈"]
+
+      let randomEmoji = emojis[Math.floor(Math.random() * emojis.length)]
+      
+      let fallingDiv = document.createElement("div")
+      fallingDiv.className = "falling"
+      fallingDiv.style.right = `${Math.floor(Math.random() * 95) + 1}%`
+      
+      let spinningDiv = document.createElement("div")
+      spinningDiv.className = "spinning"
+      spinningDiv.innerText = randomEmoji
+      
+      fallingDiv.appendChild(spinningDiv);
+      container.appendChild(fallingDiv)
+      setTimeout(() => container.removeChild(fallingDiv), 3000);
+}
+
 function search(data, query) {
 
       let results = []
 
       for (let i = 0; i < data.length; i++) {
-            
+
             let team = data[i]
-            
+
             if (team.name.indexOf(query) > -1) {
 
                   results.push(team)
@@ -76,23 +98,23 @@ function search(data, query) {
                               results.push(member)
 
                         }
-            
+
                         if (member.type == "directory") {
-                              
+
                               for (let x = 0; x < member.children.length; x++) {
-                                    
+
                                     let school = member.children[x]
-                                    
+
                                     if (school.name.indexOf(query) > -1) {
 
                                           results.push(school)
 
                                     }
-                        
+
                               }
-            
+
                         }
-            
+
                   }
 
             }
